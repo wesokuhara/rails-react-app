@@ -1,0 +1,101 @@
+# Uncomment these lines to enable the custom cop for removing deprecations.
+# We can't commit this uncommented right now because Hound doesn't currently
+# handle custom `require`s [1]. Until that's fixed, we'll leave this commented
+# out so that Hound can still run, and instead run this cop as a CI step.
+# [1]: https://github.com/houndci/hound/issues/1111#issuecomment-403577250
+#require:
+#  - ./linters/custom_cops/remove_deprecations.rb
+
+# Set max line length to 100
+Metrics/LineLength:
+  Max: 100
+  Enabled: true
+
+# Set max method length to 100
+Metrics/MethodLength:
+  Max: 100
+
+# Renaming `has_something?` to `something?` obfuscates whether it is a 'is-a'
+# or a 'has-a' relationship.
+Naming/PredicateName:
+  Enabled: false
+
+# ClassLength, ugh
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+# Because only Paulus cares about documentation
+Style/Documentation:
+  Enabled: false
+
+# This cop is too aggresive in claiming a guard clause should be used
+Style/GuardClause:
+  Enabled: false
+
+# rescue in modifier form is very idiomatic and useful in certain situations!
+Style/RescueModifier:
+  Enabled: false
+
+# Otherwise you get a warning if you do ['Paulus', 'Productive', 'Very']
+Style/WordArray:
+  Enabled: false
+
+# Otherwise you get a warning if you do [:paulus, :prints, :paddycakes]
+Style/SymbolArray:
+  Enabled: false
+
+Style/FormatStringToken:
+  Exclude:
+    - 'config/routes.rb'
+
+# This cop does not fare well with our increased method length. See http://c2.com/cgi/wiki?AbcMetric
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# If `comma`, the cop requires a comma after the last item in an array or
+# hash, but only when each item is on its own line.
+# If `consistent_comma`, the cop requires a comma after the last item of all
+# non-empty array and hash literals.
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+# Let's not complain about this until we decide to opt in to it
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Rails 5 cops disabled since we're on Rails 4
+Rails/ApplicationJob:
+  Enabled: false
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*.rb'
+    - 'lib/tasks/**/*.rake'
+    - 'config/routes.rb'
+
+Rails/SkipsModelValidations:
+  Blacklist:
+    - decrement!
+    - decrement_counter
+    - increment!
+    - increment_counter
+    - toggle!
+    - touch
+    - update_counters

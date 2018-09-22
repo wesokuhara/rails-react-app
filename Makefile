@@ -1,0 +1,2 @@
+start:
+	rails server
